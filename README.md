@@ -7,6 +7,7 @@ A lightweight **Flask application** for monitoring server resources, Nginx, and 
 - Overview
 - Setup
 - Environment Configuration
+- Server Configuration
 - Running the Application
 - API Endpoints
 - License
@@ -49,6 +50,35 @@ Follow these steps to set up the project locally:
    DB_HOST=your-db-host
    DB_NAME=your-db-name
    ```
+
+## 🔧 Server Configuration
+
+### Nginx
+
+Add the following configuration to each domain's Nginx configuration file to enable status monitoring:
+
+```
+location /nginx_status {
+    stub_status on;
+    allow 127.0.0.1;
+    allow ::1;
+    deny all;
+    access_log off;
+}
+```
+
+### MySQL
+
+Modify the `/etc/mysql/mysql.conf.d/mysqld.cnf` file to include the following lines for enhanced logging and performance monitoring:
+
+```
+log_error = /var/log/mysql/error.log
+performance_schema = ON
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/mysql-slow.log
+long_query_time = 2
+log_error_verbosity = 2
+```
 
 ## 🚀 Running the Application
 
